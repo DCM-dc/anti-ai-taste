@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<!--
+  examples/landing-page-bad.html
+
+  This is the canonical AI-generated SaaS landing page.
+  Every default is present. Every tell is intact.
+
+  This file is the "before" — read it to recognize the smell.
+  Compare with landing-page-good.html for the "after."
+
+  Annotations are inline as HTML comments, marked with ←.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowAI — Supercharge Your Workflow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- ← Inter alone, no pairing, no variable font, no optical sizing. The centroid. -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;          /* ← the centroid font */
+      color: #0f172a;                              /* ← slate-900, the centroid text color */
+      background: #ffffff;
+      line-height: 1.5;                            /* ← the centroid line-height */
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* === Nav === */
+    nav {
+      display: flex;
+      justify-content: space-between;              /* ← logo left, links right. The centroid nav. */
+      align-items: center;
+      padding: 20px 0;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { color: #475569; text-decoration: none; font-size: 14px; }
+    .btn-primary {
+      background: #6366f1;                          /* ← indigo-500. The centroid primary. */
+      color: white;
+      padding: 12px 24px;
+      border-radius: 16px;                          /* ← rounded-2xl. The centroid radius. */
+      border: none;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;             /* ← transition-all duration-300 ease-in-out. The centroid motion. */
+    }
+    .btn-primary:hover { background: #4f46e5; transform: scale(1.05); }  /* ← hover scale 1.05. The AI tell. */
+
+    /* === Hero === */
+    .hero {
+      text-align: center;                            /* ← centered hero. The centroid hero. */
+      padding: 96px 0;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+      /* ← indigo → violet → fuchsia diagonal gradient. The single most recognizable AI tell. */
+      color: white;
+    }
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      font-size: 20px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto 32px;
+    }
+    .hero-cta { display: flex; gap: 16px; justify-content: center; }
+    .btn-ghost {
+      background: transparent;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 16px;
+      border: 1px solid white;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+    }
+    /* ← Filled CTA + Ghost CTA, centered. The centroid hero CTA pattern. */
+
+    /* === Social proof === */
+    .social-proof {
+      padding: 48px 0;
+      text-align: center;
+    }
+    .social-proof p {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    .logos {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      filter: grayscale(100%);                       /* ← grayscale logo strip. The centroid social proof. */
+      opacity: 0.5;
+    }
+
+    /* === Features === */
+    .features {
+      padding: 96px 0;
+    }
+    .features h2 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 16px;
+    }
+    .features-subtitle {
+      text-align: center;
+      color: #64748b;
+      margin-bottom: 64px;
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);          /* ← grid-cols-3. The centroid feature grid. */
+      gap: 32px;
+    }
+    .feature-card {
+      background: white;
+      border: 1px solid #e2e8f0;                       /* ← border-slate-200. The centroid border. */
+      border-radius: 16px;                              /* ← rounded-2xl. The centroid card radius. */
+      padding: 32px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);          /* ← shadow-md. The centroid shadow. */
+      transition: all 0.3s ease-in-out;
+    }
+    .feature-card:hover {
+      transform: scale(1.05);                          /* ← hover scale 1.05. The AI tell. */
+      box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: #eef2ff;                              /* ← indigo-50 tinted container. The centroid icon treatment. */
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .feature-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #6366f1;                                   /* ← indigo-600 icon stroke. The centroid icon color. */
+      stroke-width: 2;
+      fill: none;
+    }
+    .feature-card h3 { font-size: 20px; margin-bottom: 8px; }
+    .feature-card p { color: #64748b; line-height: 1.6; }
+
+    /* === Pricing === */
+    .pricing { padding: 96px 0; background: #f8fafc; }   /* ← slate-50 background. The centroid section bg. */
+    .pricing h2 { text-align: center; font-size: 36px; margin-bottom: 64px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .pricing-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .pricing-card.featured {
+      border: 2px solid #6366f1;                          /* ← middle plan elevated with ring. The centroid pricing. */
+      transform: scale(1.05);                              /* ← and scaled up. The AI tell. */
+    }
+    .pricing-card h3 { font-size: 20px; margin-bottom: 16px; }
+    .pricing-card .price { font-size: 36px; font-weight: 700; margin-bottom: 24px; }
+    .pricing-card ul { list-style: none; margin-bottom: 24px; }
+    .pricing-card li {
+      padding: 8px 0;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .pricing-card li::before { content: "✓"; color: #10b981; font-weight: bold; }  /* ← green checkmarks. The centroid. */
+
+    /* === FAQ === */
+    .faq { padding: 96px 0; max-width: 800px; margin: 0 auto; }
+    .faq h2 { text-align: center; font-size: 36px; margin-bottom: 64px; }
+    .faq-item {
+      border-bottom: 1px solid #e2e8f0;
+      padding: 24px 0;
+    }
+    .faq-item h3 { font-size: 18px; margin-bottom: 8px; }
+    .faq-item p { color: #64748b; }
+
+    /* === CTA banner === */
+    .cta-banner {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);  /* ← another gradient. The centroid CTA banner. */
+      padding: 64px 0;
+      text-align: center;
+      color: white;
+    }
+    .cta-banner h2 { font-size: 36px; margin-bottom: 16px; }
+    .cta-banner p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; }
+
+    /* === Footer === */
+    footer {
+      background: #0f172a;                                /* ← slate-900 footer. The centroid footer. */
+      color: white;
+      padding: 64px 0;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);              /* ← 4-col footer. The centroid footer. */
+      gap: 48px;
+    }
+    .footer-col h4 { font-size: 14px; margin-bottom: 16px; }
+    .footer-col a {
+      display: block;
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 4px 0;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .feature-grid, .pricing-grid, .footer-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav: logo left, links right, CTA far right. The centroid nav. -->
+<nav class="container">
+  <div class="logo">FlowAI</div>
+  <div class="nav-links">
+    <a href="#">Features</a>
+    <a href="#">Pricing</a>
+    <a href="#">Docs</a>
+    <button class="btn-primary">Get Started</button>
+  </div>
+</nav>
+
+<!-- Hero: centered, gradient bg, H1 + sub + filled CTA + ghost CTA. The centroid hero. -->
+<section class="hero">
+  <div class="container">
+    <h1>Build the Future of Work</h1>
+    <!-- ← "Build the Future of Work." The marketing 4-pack. -->
+    <p>Supercharge your team's productivity with AI-powered workflows that harness the power of artificial intelligence.</p>
+    <!-- ← "Supercharge" + "harness the power of." Two signature phrases in one sentence. -->
+    <div class="hero-cta">
+      <button class="btn-primary">Get Started</button>
+      <button class="btn-ghost">Learn More</button>
+    </div>
+  </div>
+</section>
+
+<!-- Social proof: grayscale logo strip. The centroid social proof. -->
+<section class="social-proof container">
+  <p>Trusted by leading companies worldwide</p>
+  <div class="logos">
+    <div>ACME</div>
+    <div>GLOBEX</div>
+    <div>INITECH</div>
+    <div>UMBRILLA</div>
+    <div>HOOLI</div>
+  </div>
+</section>
+
+<!-- Features: 3 equal cards with Lucide Zap/Shield/Rocket. The centroid feature grid. -->
+<section class="features container">
+  <h2>Everything you need to succeed</h2>
+  <p class="features-subtitle">Comprehensive features designed to empower your team</p>
+  <!-- ← "comprehensive" + "empower." Signature words. -->
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <!-- Lucide Zap. The centroid "fast" icon. -->
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h3>Fast</h3>
+      <p>Lightning-fast performance that supercharges your workflow.</p>
+      <!-- ← "supercharges" again. Signature word. -->
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <!-- Lucide Shield. The centroid "secure" icon. -->
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Secure</h3>
+      <p>Enterprise-grade security that protects your data.</p>
+      <!-- ← "enterprise-grade." Signature phrase. -->
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <!-- Lucide Rocket. The centroid "scale" icon. -->
+        <svg viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>
+      </div>
+      <h3>Scalable</h3>
+      <p>Grows with your team, from startup to enterprise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing: 3 tiers, middle elevated. The centroid pricing. -->
+<section class="pricing">
+  <div class="container">
+    <h2>Simple, transparent pricing</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Starter</h3>
+        <div class="price">$9/mo</div>
+        <ul>
+          <li>5 users</li>
+          <li>10GB storage</li>
+          <li>Basic support</li>
+        </ul>
+        <button class="btn-primary">Get Started</button>
+      </div>
+
+      <div class="pricing-card featured">
+        <!-- ← middle plan "featured" with ring + scale. The centroid. -->
+        <h3>Pro</h3>
+        <div class="price">$29/mo</div>
+        <ul>
+          <li>Unlimited users</li>
+          <li>100GB storage</li>
+          <li>Priority support</li>
+          <li>Advanced analytics</li>
+        </ul>
+        <button class="btn-primary">Get Started</button>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul>
+          <li>Everything in Pro</li>
+          <li>SSO</li>
+          <li>Dedicated support</li>
+        </ul>
+        <button class="btn-primary">Contact Us</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ accordion. The centroid FAQ. -->
+<section class="faq container">
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-item">
+    <h3>Is FlowAI easy to set up?</h3>
+    <p>Yes! FlowAI is designed to be intuitive and easy to use. You can get started in minutes.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Do you offer a free trial?</h3>
+    <p>Yes, we offer a 14-day free trial. No credit card required.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Can I cancel anytime?</h3>
+    <p>Yes, you can cancel your subscription at any time.</p>
+  </div>
+</section>
+
+<!-- CTA banner: gradient, "Start building today." The centroid CTA banner. -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Start building today</h2>
+    <p>Join thousands of teams already using FlowAI</p>
+    <button class="btn-primary">Get Started</button>
+  </div>
+</section>
+
+<!-- Footer: 4 columns Product/Company/Resources/Legal. The centroid footer. -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Integrations</a>
+        <a href="#">Changelog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">Help Center</a>
+        <a href="#">Community</a>
+        <a href="#">Status</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Security</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

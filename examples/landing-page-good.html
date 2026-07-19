@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--
+  examples/landing-page-good.html
+
+  Same product brief as landing-page-bad.html: a SaaS landing page for
+  a battery monitoring tool for solar installers.
+
+  But every decision here is derived from a source, not from the
+  training distribution. Read the annotations to see the source chain.
+
+  Source chain (top-level):
+  Product  : battery-monitoring tool for solar installers
+  User     : field technician, on phone, in direct sunlight, wants the number
+  Brand    : logo uses #2d5a3d (deep cycle battery green)
+  Locale   : field use, often outdoors
+  Reference: industrial control panels (SCADA, factory HMIs)
+
+  What's omitted from the default grammar, and why:
+  - No centered marketing hero. Field techs want data, not pitches.
+  - No 3-col feature cards with Lucide Zap/Shield/Rocket. The product IS
+    the feature; the dashboard is the features.
+  - No "Trusted by" logo strip. Field techs don't care.
+  - No 3-tier pricing on the landing page. Pricing lives on /pricing.
+  - No FAQ accordion. Support lives in /docs and chat.
+  - No CTA banner. The user is already a customer.
+  - No 4-col footer. Just a single line.
+
+  What's added that the default grammar wouldn't have:
+  - Live readout as the visual anchor.
+  - Asymmetric 7/5 grid reflecting content weight.
+  - Industrial control-panel typography (IBM Plex Sans + Mono).
+  - Radius hierarchy tied to element class.
+  - Custom SVGs for status (IEC symbols), not Lucide.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voltkeeper — battery monitoring for solar installs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!--
+    Typography source chain:
+    - Body ← IBM Plex Sans. Wider letterforms than Inter, which gives long
+      data-rich displays more breath. Humanist roots match industrial
+      control panel heritage (Plex was IBM's in-house face).
+    - Mono ← IBM Plex Mono. Used only for data, labels, and code — never
+      body. The mono on data tables is a control-panel convention.
+    - No display face. Field tools don't have decorative headlines; they
+      have data. Using a display serif here would be lying about the
+      product's character.
+  -->
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /*
+      Palette source chain:
+      - Primary #245944 ← brand logo #2d5a3d, darkened 8% for AA contrast
+        on cream surfaces (the field tech reads in sun).
+      - Surface #f4ede0 ← warm off-white. Pure white reflects sun glare
+        on phone screens; warm cream reduces glare.
+      - Ink #1a1814 ← warm near-black. Cool slate would clash with the
+        warm palette; warm near-black harmonizes.
+      - Caution #d97706 ← hardware battery-warning amber. Field techs
+        already associate this color with battery warnings on physical
+        hardware, so reusing it here is a convention, not a decoration.
+      - No gradient. Field tools don't have gradients. Gradients are
+        decoration; data is information.
+    */
+    :root {
+      --primary:        #245944;
+      --primary-hover:  #1c4636;
+      --surface:        #f4ede0;
+      --surface-deep:   #e6dbc2;
+      --ink:            #1a1814;
+      --ink-soft:       #4a443a;
+      --caution:        #d97706;
+      --rule:           #d4c8a8;
+    }
+
+    html { -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+      background: var(--surface);
+      color: var(--ink);
+      line-height: 1.55;
+      font-size: 15px;
+    }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /*
+      Nav source chain:
+      - Compact, left-aligned, no marketing CTA. The user is already a
+        customer (they logged in); no "Get Started" button needed.
+      - Mono labels because this is a tool, not a marketing site. Mono
+        signals "data environment" the way a SCADA HMI does.
+    */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+    }
+    nav .brand {
+      font-weight: 500;
+      color: var(--primary);
+      letter-spacing: -0.01em;
+    }
+    nav a {
+      color: var(--ink-soft);
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--primary); }
+    nav .status {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary);
+    }
+    nav .status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /*
+      Main layout source chain:
+      - 12-col grid, asymmetric 7/5 split.
+      - Live readout (7 cols) is the primary task: "what's the battery
+        at right now?"
+      - Install list (5 cols) is secondary: "which installs am I
+        responsible for?"
+      - Alerts (12 cols, full-width below) is tertiary: "what's gone
+        wrong recently, in chronological order."
+      - No marketing hero. The dashboard is the hero.
+    */
+    main {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 20px;
+      padding: 32px 0 64px;
+    }
+
+    .readout { grid-column: span 7; }
+    .installs { grid-column: span 5; }
+    .alerts { grid-column: span 12; }
+
+    /*
+      Surface hierarchy source chain:
+      - Data displays: 2px radius. Almost square, because data is precise
+        and square corners read as "fact."
+      - Controls (buttons, inputs): 4px radius. Slightly rounded affords
+        press without becoming decorative.
+      - Cards / panels: 8px radius. Clearly grouped content.
+      - Avatars / status dots: 50%. Convention.
+      - One shadow recipe, used only for hover state. Cards in normal
+        flow have border, not shadow.
+      - No glassmorphism. Field tools aren't macOS apps.
+    */
+    .panel {
+      background: #fbf6ea;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .panel:hover {
+      border-color: var(--primary);
+    }
+    .panel-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      color: var(--ink-soft);
+      opacity: 0.7;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Live readout — the visual anchor of the page. */
+    .readout-voltage {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 64px;
+      font-weight: 500;
+      color: var(--primary);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .readout-voltage .unit {
+      font-size: 24px;
+      color: var(--ink-soft);
+      margin-left: 8px;
+    }
+    .readout-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .readout-meta div { display: flex; flex-direction: column; gap: 2px; }
+    .readout-meta .label { opacity: 0.6; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .readout-meta .value { color: var(--ink); font-size: 13px; }
+
+    /* Per-cell drift bars — data, no decoration. */
+    .cell-bars {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 4px;
+      height: 32px;
+    }
+    .cell-bar {
+      background: var(--primary);
+      border-radius: 2px;
+      position: relative;
+    }
+    .cell-bar.warn { background: var(--caution); }
+    .cell-bar::after {
+      content: attr(data-cell);
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--ink-soft);
+      opacity: 0.6;
+    }
+
+    /* Install list — secondary content. */
+    .install-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      padding: 12px 0;
+      border-bottom: 1px dashed var(--rule);
+      align-items: baseline;
+    }
+    .install-item:last-child { border-bottom: none; }
+    .install-name {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .install-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      opacity: 0.7;
+    }
+    .install-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10.5px;
+      padding: 2px 6px;
+      border-radius: 2px;
+    }
+    .install-status.ok { background: rgba(36, 89, 68, 0.12); color: var(--primary); }
+    .install-status.warn { background: rgba(217, 119, 6, 0.15); color: var(--caution); }
+
+    /* Alerts log — chronological, not "cards." */
+    .alert-row {
+      display: grid;
+      grid-template-columns: 80px 100px 1fr auto;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      align-items: baseline;
+    }
+    .alert-row:last-child { border-bottom: none; }
+    .alert-time { color: var(--ink-soft); opacity: 0.7; }
+    .alert-install { color: var(--ink); }
+    .alert-msg { color: var(--ink); }
+    .alert-severity {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .alert-severity.high { background: rgba(217, 119, 6, 0.15); color: var(--caution); }
+    .alert-severity.med { background: rgba(74, 68, 58, 0.1); color: var(--ink-soft); }
+
+    /*
+      Iconography source chain:
+      - Custom SVGs using IEC 60617 symbols (industrial control panel
+        standard). Field techs already read these on hardware.
+      - Stroke weight 1.5px matches the data tables.
+      - No Lucide. Lucide's "battery" looks like a phone battery, not
+        a deep-cycle cell. IEC's battery symbol is what field techs
+        recognize.
+      - No icons in feature lists — the labels are precise enough.
+    */
+    .icon-battery {
+      display: inline-block;
+      vertical-align: middle;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+      width: 24px;
+      height: 14px;
+    }
+
+    /*
+      Motion source chain:
+      - Press feedback: 100ms ease-out, transform only. Press must feel
+        instant.
+      - Hover: 150ms ease-out, border-color only. Cards don't lift; the
+        border darkens to show "this is interactive."
+      - Data updates: no transition. The number is the number; animating
+        it would imply "we're computing this."
+      - No bounce, no elastic. This is a field tool, not a toy.
+      - prefers-reduced-motion respected.
+    */
+    .panel { transition: border-color 150ms ease-out; }
+
+    .btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      background: var(--primary);
+      color: var(--surface);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: transform 100ms ease-out, background 100ms ease-out;
+    }
+    .btn:hover { background: var(--primary-hover); }
+    .btn:active { transform: scale(1.02); }  /* 2%, not 5% */
+
+    /*
+      Footer source chain:
+      - Single line, not 4 columns. This is a tool, not a marketing site.
+      - Version + status + support email. That's all a field tech needs
+        at the bottom of the page.
+    */
+    footer {
+      border-top: 1px solid var(--rule);
+      padding: 20px 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 760px) {
+      .readout, .installs { grid-column: span 12; }
+      .readout-voltage { font-size: 48px; }
+      .alert-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Nav: compact, mono, no marketing CTA. The user is already a customer. -->
+  <nav>
+    <span class="brand">VOLTKEEPER</span>
+    <a href="#">Dashboard</a>
+    <a href="#">Installs</a>
+    <a href="#">Alerts</a>
+    <a href="#">Account</a>
+    <span class="status">all systems ok</span>
+  </nav>
+
+  <main>
+    <!-- Live readout: 7 cols. The visual anchor. -->
+    <section class="panel readout">
+      <div class="panel-label">
+        <span>INSTALL / BRYANT-STORAGE-04</span>
+        <span>polled 4s ago</span>
+      </div>
+
+      <div class="readout-voltage">
+        48.2<span class="unit">V</span>
+      </div>
+
+      <div class="readout-meta">
+        <div>
+          <span class="label">Pack</span>
+          <span class="value">48.2 V</span>
+        </div>
+        <div>
+          <span class="label">Current</span>
+          <span class="value">-2.4 A</span>
+        </div>
+        <div>
+          <span class="label">SoC</span>
+          <span class="value">82%</span>
+        </div>
+      </div>
+
+      <!-- Per-cell drift bars. Cell 5 is in warning (>50mV from pack mean). -->
+      <div class="cell-bars" aria-label="Per-cell voltage drift">
+        <div class="cell-bar" data-cell="1" style="height: 60%"></div>
+        <div class="cell-bar" data-cell="2" style="height: 62%"></div>
+        <div class="cell-bar" data-cell="3" style="height: 58%"></div>
+        <div class="cell-bar" data-cell="4" style="height: 61%"></div>
+        <div class="cell-bar warn" data-cell="5" style="height: 88%"></div>
+        <div class="cell-bar" data-cell="6" style="height: 59%"></div>
+        <div class="cell-bar" data-cell="7" style="height: 63%"></div>
+        <div class="cell-bar" data-cell="8" style="height: 60%"></div>
+      </div>
+    </section>
+
+    <!-- Install list: 5 cols, secondary content. -->
+    <aside class="panel installs">
+      <div class="panel-label">
+        <span>YOUR INSTALLS</span>
+        <span>7 active</span>
+      </div>
+
+      <div class="install-item">
+        <div>
+          <div class="install-name">bryant-storage-04</div>
+          <div class="install-meta">Bryant, AR · 200kWh · 8 cells</div>
+        </div>
+        <span class="install-status warn">drift</span>
+      </div>
+
+      <div class="install-item">
+        <div>
+          <div class="install-name">mercer-farm-02</div>
+          <div class="install-meta">Mercer, MO · 80kWh · 6 cells</div>
+        </div>
+        <span class="install-status ok">ok</span>
+      </div>
+
+      <div class="install-item">
+        <div>
+          <div class="install-name">delta-roof-11</div>
+          <div class="install-meta">Delta, UT · 40kWh · 4 cells</div>
+        </div>
+        <span class="install-status ok">ok</span>
+      </div>
+
+      <div class="install-item">
+        <div>
+          <div class="install-name">sullivan-ground-07</div>
+          <div class="install-meta">Sullivan, KY · 120kWh · 8 cells</div>
+        </div>
+        <span class="install-status ok">ok</span>
+      </div>
+    </aside>
+
+    <!-- Alerts: 12 cols, chronological log. -->
+    <section class="panel alerts">
+      <div class="panel-label">
+        <span>RECENT ALERTS</span>
+        <span>last 24h</span>
+      </div>
+
+      <div class="alert-row">
+        <span class="alert-time">14:23</span>
+        <span class="alert-install">bryant-storage-04</span>
+        <span class="alert-msg">Cell 5 drift exceeded 50mV from pack mean (currently 71mV)</span>
+        <span class="alert-severity high">high</span>
+      </div>
+      <div class="alert-row">
+        <span class="alert-time">11:08</span>
+        <span class="alert-install">bryant-storage-04</span>
+        <span class="alert-msg">BMS heartbeat missed (recovered in 6s)</span>
+        <span class="alert-severity med">med</span>
+      </div>
+      <div class="alert-row">
+        <span class="alert-time">08:42</span>
+        <span class="alert-install">delta-roof-11</span>
+        <span class="alert-msg">Firmware update available (v2.4.1 → v2.4.3)</span>
+        <span class="alert-severity med">med</span>
+      </div>
+      <div class="alert-row">
+        <span class="alert-time">06:15</span>
+        <span class="alert-install">sullivan-ground-07</span>
+        <span class="alert-msg">Grid outage detected; switched to battery (12s)</span>
+        <span class="alert-severity med">med</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer: single line. No 4-col link grid. -->
+  <footer>
+    <span>v2.4.1 · status: ok · support@voltkeeper.example</span>
+    <span>© voltkeeper</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
