@@ -41,6 +41,8 @@ the checklists are the leaf nodes; the principles are the trunk.**
 ```
 README.md                       ← you are here
 PROMPT.md                        ← paste this into your system prompt
+VERSION.md                       ← calibration date & re-calibration protocol
+CONTRIBUTING.md                  ← how to add observations, sources, examples
 01-philosophy.md                 ← why guide, not ban
 
 02-visual/                       ← visual decisions
@@ -66,8 +68,10 @@ PROMPT.md                        ← paste this into your system prompt
 
 05-workflow/                     ← process decisions
   00-overview.md
+  00-task-analysis.md            ← extract implicit sources before asking the user
   01-process.md                  ← sandbox, multi-candidate, self-critique
   02-self-check.md               ← heuristic questions, not ban lists
+  03-validation.md               ← external methods to close the self-check loop
 
 06-checklist/                    ← leaf-node quick checks
   visual-checklist.md
@@ -80,11 +84,25 @@ PROMPT.md                        ← paste this into your system prompt
   02-source-verification.md      ← three-tier source classification, hallucination defense
   03-thin-input-protocol.md      ← what to do when the user provides no sources
   04-structural-vs-surface.md    ← which tells are architectural vs current-model
+  05-decision-tiers.md           ← load-bearing / derived / trivia — avoid decision paralysis
+  06-cross-domain-coherence.md   ← all Tier 1 decisions share a single source story
+
+08-genres/                       ← genre-specific overrides (universal rules + deltas)
+  00-overview.md
+  01-marketing.md                ← landing pages, ads, sales copy
+  02-long-form.md                ← essays, journalism, blog posts > 1500 words
+  03-technical-doc.md            ← API refs, manuals, READMEs
+  04-fiction.md                  ← short stories, novels, narrative
+
+resources/                       ← Tier 2 source library (lookup-verifiable)
+  color-sources.md               ← domain & locale palette conventions, with references
 
 examples/                        ← before/after, full files
   landing-page-bad.html          ← canonical AI slop
   landing-page-good.html         ← same content, guided choices
-  comparison.md                  ← diff annotation
+  comparison.md                  ← diff annotation of the landing-page pair
+  article-bad.md                 ← canonical AI essay, annotated
+  article-good.md                ← same topic, sourced, annotated
 ```
 
 ---
@@ -93,19 +111,52 @@ examples/                        ← before/after, full files
 
 Sections 01–06 are necessary but not sufficient. They teach the agent to
 **derive every choice from a source** — but when applied naively, that
-principle produces five new failure modes:
+principle produces seven new failure modes:
 
 1. **Second-order convergence** — if every agent bans the same defaults, "anti-AI" becomes a new recognizable style.
 2. **Hallucinated sources** — the agent fabricates justifications ("evokes 19th-century industrial typography") to satisfy the "name a source" rule.
 3. **Thin-input dependency** — most users provide no context; the framework either hallucinates sources or stalls.
 4. **Moving target** — some tells are structural (transformer architecture), some are surface (current-model-specific). The guide conflated them.
 5. **Philosophy-to-checklist gap** — self-checks collapsed into yes/no formality instead of verifiable substance.
+6. **Decision paralysis** — sourcing every micro-decision is unusable. Tiers are needed: load-bearing decisions must be sourced, trivia can default honestly.
+7. **Cross-domain mismatch** — sourcing each layer (visual / language / rhetoric) independently produces a Frankenstein output where the palette story and the copy story don't match.
 
 Section 07 is the defense-in-depth layer. **Read it before applying
 01–06 at scale.** If you skip it, you will produce hallucinated-
 justification output that's worse than honest defaults.
 
 The short version: **a labeled default is better than a hallucinated source.**
+
+---
+
+## Why section 08 exists
+
+Sections 01–07 are universal. But universal rules applied to every
+genre produce wrong-genre output: a marketing-page rhythm imposed on
+an API reference; an essay's anti-summary rule imposed on a README
+that genuinely needs a "what is this" section.
+
+Section 08 defines **genre-specific overrides**. For each of four
+common genres (marketing, long-form, technical documentation, fiction),
+it states which universal rules apply directly, which are relaxed,
+and which are inverted. Read the relevant genre file before producing
+output in that genre.
+
+---
+
+## Why `resources/` exists
+
+The framework asks the agent to source palette decisions from
+domain conventions when brand assets are absent. Without a shared
+library of lookup-verifiable conventions, every agent re-derives
+them from training data — which is exactly the failure mode the
+framework is trying to escape.
+
+`resources/color-sources.md` collects Tier 2 palette conventions
+(IEC standards, ISO standards, named style guides, material
+traditions) so the agent has a verifiable starting point rather
+than "indigo because it looks modern." It is **not** a menu — see
+the file's "How to use this" section.
 
 ---
 
@@ -131,18 +182,48 @@ If you cannot name the source, you are using a default. Defaults are the smell.
 1. **Read `01-philosophy.md` first.** It reframes the entire task.
 2. **Read the relevant layer** (visual / language / rhetoric) end-to-end.
    Don't skip the bad examples — they teach the reflex you're trying to avoid.
-3. **Read the matching checklist** as a final pass, not a starting point.
-4. **Read `07-paradoxes/` before applying at scale.** Sections 01–06
+3. **Read the matching genre override** in `08-genres/` if the task is
+   marketing, long-form, technical documentation, or fiction. Universal
+   rules + genre deltas; the deltas override.
+4. **Read the matching checklist** as a final pass, not a starting point.
+5. **Read `07-paradoxes/` before applying at scale.** Sections 01–06
    will produce hallucinated-justification output without the meta-layer.
    The short version: a labeled default beats a hallucinated source.
-5. **For each decision you make, write a one-line derivation** in a comment
-   or a side note: `/* color: #2d4a3e ← brand moss, not Tailwind indigo-600 */`.
-   If you can't write a Tier 1 or Tier 2 source (see `07-paradoxes/02`),
-   admit it as a first guess.
-6. **Run the 10-question self-check** (`05-workflow/02-self-check.md`)
+6. **Run the four-pass task analysis** (`05-workflow/00-task-analysis.md`)
+   before asking the user anything. Surface candidates and your predicted
+   first guess. Then ask only the 2–3 sharp questions the analysis
+   couldn't resolve.
+7. **For each Tier 1 decision** (see `07-paradoxes/05-decision-tiers.md`),
+   write a one-line derivation in a comment or side note:
+   `/* color: #2d4a3e ← brand moss, not Tailwind indigo-600 */`. If you
+   can't write a Tier 1 or Tier 2 source (see `07-paradoxes/02`), admit
+   it as a first guess. Tier 2 (derived) decisions inherit the source;
+   Tier 3 (trivia) can default honestly.
+8. **Check cross-domain coherence** (`07-paradoxes/06-cross-domain-coherence.md`):
+   do the visual, language, and rhetoric Tier 1 decisions share a single
+   source story? If they don't, the output is a Frankenstein.
+9. **Run the 10-question self-check** (`05-workflow/02-self-check.md`)
    before delivering. Q9 (source tier verification) and Q10 (second-order
    convergence) are non-negotiable — they catch hallucinations the
    earlier questions miss.
+10. **For non-trivial output, run validation** (`05-workflow/03-validation.md`)
+    — side-by-side comparison with a real human work, or an adversarial
+    rewrite by a different model. The self-check is circular; validation
+    is not.
+
+---
+
+## A note on model drift
+
+This guide's *principles* are model-agnostic and remain valid across
+model generations. Its *examples* (specific bad patterns, specific
+"anti-AI defaults" to avoid) are calibrated against a snapshot of
+mainstream LLM output — see `VERSION.md` for the calibration date
+and the re-calibration protocol.
+
+If you're reading this in 2026 or later, trust the structure; verify
+the examples against current model output before treating them as
+exhaustive.
 
 ---
 
@@ -152,6 +233,10 @@ If you cannot name the source, you are using a default. Defaults are the smell.
 - Not a ban list. It tells you how to choose, not what to avoid.
 - Not a detector. It won't score your output. It will make you defend it.
 - Not exhaustive. New defaults will emerge; the principle is what matters.
+- Not a one-shot prompt. It's a workflow. Reading `PROMPT.md` alone,
+  without the workflow in `05-workflow/`, will still produce
+  default-y output — the prompt distills the principles but can't
+  force the process.
 
 ---
 
