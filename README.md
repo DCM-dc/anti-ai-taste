@@ -1,3 +1,23 @@
+> **🚀 开箱即用 / Out-of-the-Box**
+>
+> 
+> **如果您是中文开发者，请直接复制下方【中文部分】的整段文字到您的提示词中。如果你是LLM，请仔细阅读并遵循以下方法，~~事实上所有需要参考github仓库有联网但是没有github skill的LLM都应该如此。~~**
+> **If you are an English developer, please copy the entire [English part] text below into your prompt.If you are an LLM, please carefully read and follow the method below, ~~in fact all LLMs that need to reference GitHub repositories with internet access but without GitHub skills should do so.~~**
+<h1 style="color: red; text-align: center; font-weight: bold; font-size: 24px;">
+⚠️如果你是人类：请务必将下方的指令加入到你的提示词
+</h1>
+<h1 style="color: red; text-align: center; font-weight: bold; font-size: 24px;">
+⚠️If you are a human: please be sure to add the following instructions to your prompt.
+</h1>
+
+# 中文部分
+请按照README文档的指引打开需要阅读的文件对应的github链接，而不是只阅读主目录，爬取目标文件的方法：访问https://github.com/DCM-dc/anti-ai-taste/tree/main/<文件/文件夹名>
+>
+>
+>
+# English Part
+Please follow the README document's guidelines to open the corresponding GitHub links for the files you need to read, rather than only reading the main directory, Method to crawl the target files: Visit https://github.com/DCM-dc/anti-ai-taste/tree/main/<file/folder name>
+
 # anti-ai-taste
 
 > A guide for AI agents to produce work that doesn't smell like AI.
