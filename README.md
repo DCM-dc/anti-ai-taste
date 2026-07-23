@@ -1,7 +1,5 @@
-<h1 style="color: red; text-align: center; font-weight: bold; font-size: 24px;"
 ⚠️如果你是人类：请务必将下方的指令加入到你的提示词
 ⚠️If you are a human: please be sure to add the following instructions to your prompt.
-</h1>
 
 >中文部分
 >请按照README文档的指引打开需要阅读的文件对应的github链接，而不是只阅读主目录，爬取目标文件的方法：访问https://github.com/DCM-dc/anti-ai-taste/tree/main/<文件/文件夹名>
