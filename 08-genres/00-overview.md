@@ -27,7 +27,7 @@ relax, tighten, or invert specific rules.
 
 ---
 
-## The four genres covered
+## The five genres covered
 
 1. **Marketing** (`01-marketing.md`) — landing pages, ads, sales copy.
    The universal rules apply most directly. Overrides are minimal.
@@ -37,6 +37,10 @@ relax, tighten, or invert specific rules.
    manuals, READMEs. Overrides: invert rhythm rules, require completeness.
 4. **Fiction** (`04-fiction.md`) — short stories, novels, narrative.
    Overrides: relax coinage rules, require sensory detail, allow voice extremes.
+5. **Forms & data entry** (`05-forms.md`) — sign-up, survey, registration,
+   checkout, intake, settings. Overrides: invert rhythm rules (uniform
+   terse labels), forbid summary, strip marketing chrome, require Tier 2
+   usability sourcing (NN/g, WCAG).
 
 ---
 
@@ -64,10 +68,11 @@ If the user doesn't specify genre, infer from the prompt:
 | "article," "essay," "blog post," "write about X" | Long-form |
 | "API docs," "README," "manual," "how to use X" | Technical doc |
 | "story," "novel," "narrative," "character" | Fiction |
+| "form," "sign up," "survey," "register," "checkout," "intake" | Forms & data entry |
 | "report," "analysis," "whitepaper" | Long-form (with technical-doc overrides for data sections) |
 
 If ambiguous, ask: "Is this marketing, long-form, technical documentation,
-or fiction? The rules differ."
+fiction, or a form? The rules differ."
 
 ---
 
