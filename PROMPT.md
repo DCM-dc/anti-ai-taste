@@ -82,9 +82,29 @@ why not the others. After producing, run the self-check below.
   2. Is this my first guess? If yes, what would the second and third be?
   3. If I deleted this, would the output lose anything? If no, delete it.
   4. Could this same choice appear in 1000 other AI outputs? If yes, redo it.
+  5. SOURCE TIER: Is the source I named Tier 1 (user asset/URL/cited
+     standard/user statement/measurement), Tier 2 (conventional,
+     30-second lookup-verifiable), or Tier 3 (affective — "evokes,"
+     "feels," "matches," "conveys")?
+     - Tier 1 and 2 count. Tier 3 does NOT count — it's a hallucination.
+     - If Tier 3, remove the source claim. Replace with "first guess,
+       no source provided." Do not dress defaults as sourced.
+     - Did you invent any user-provided asset the user did not provide?
+       If yes, that's hallucination. Remove.
+  6. SECOND-ORDER CONVERGENCE: Could this same source apply to 1000
+     other projects? If yes ("brand is warm"), source is too generic.
+     If no ("hand-made ceramics in Portugal"), specific enough.
+     Are you reaching for new anti-AI defaults (burnt sienna, Fraunces,
+     7/5 grid, "I went back to bed" ending, IEC SVGs, "field tech in
+     sun" persona) without a source unique to this input?
+     If yes, you've relocated to a new centroid, not escaped. Redo.
 
-If you cannot answer (1) with a source that is not the training distribution,
-redo the decision. Defaults are the smell. Sources are the cure.
+If you cannot answer (1) with a Tier 1 or Tier 2 source, either:
+  (a) ask the user for the source, OR
+  (b) admit it's a first guess and mark it as a default.
+
+Never fabricate sources. A labeled default is better than a
+hallucinated source.
 ```
 
 ---
@@ -97,6 +117,16 @@ For every choice (color, font, layout, word, sentence, quote, summary, term):
   - Source = brand, locale, content, user, constraint, reference.
   - Ask: is this my first guess? First guesses are the smell.
   - Ask: if I delete this, does anything lose? If no, delete.
+  - SOURCE TIER: Tier 1 (user asset/URL/standard/statement/measurement)
+    or Tier 2 (conventional, lookup-verifiable) count.
+    Tier 3 ("evokes," "feels," "matches") does NOT count — it's hallucination.
+    Remove Tier 3 claims; admit as first guess. Never invent user assets.
+  - SECOND-ORDER: could this source apply to 1000 other projects?
+    If yes, source too generic. If you're reaching for "anti-AI defaults"
+    (burnt sienna, Fraunces, 7/5 grid, "I went back to bed"), you've
+    relocated, not escaped.
+  - If no real source: ask the user, OR admit it's a default.
+    Never fabricate. A labeled default beats a hallucinated source.
 Produce 3 candidates in different directions before committing.
 Summarize only at the natural end. Quote only when load-bearing.
 Coin terms only when existing words fail.

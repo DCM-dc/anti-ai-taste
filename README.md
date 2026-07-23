@@ -74,11 +74,38 @@ PROMPT.md                        ← paste this into your system prompt
   language-checklist.md
   rhetoric-checklist.md
 
+07-paradoxes/                    ← meta-problems that emerge at scale
+  00-overview.md
+  01-second-order-convergence.md ← "anti-AI taste" becoming a new AI taste
+  02-source-verification.md      ← three-tier source classification, hallucination defense
+  03-thin-input-protocol.md      ← what to do when the user provides no sources
+  04-structural-vs-surface.md    ← which tells are architectural vs current-model
+
 examples/                        ← before/after, full files
   landing-page-bad.html          ← canonical AI slop
   landing-page-good.html         ← same content, guided choices
   comparison.md                  ← diff annotation
 ```
+
+---
+
+## Why section 07 exists
+
+Sections 01–06 are necessary but not sufficient. They teach the agent to
+**derive every choice from a source** — but when applied naively, that
+principle produces five new failure modes:
+
+1. **Second-order convergence** — if every agent bans the same defaults, "anti-AI" becomes a new recognizable style.
+2. **Hallucinated sources** — the agent fabricates justifications ("evokes 19th-century industrial typography") to satisfy the "name a source" rule.
+3. **Thin-input dependency** — most users provide no context; the framework either hallucinates sources or stalls.
+4. **Moving target** — some tells are structural (transformer architecture), some are surface (current-model-specific). The guide conflated them.
+5. **Philosophy-to-checklist gap** — self-checks collapsed into yes/no formality instead of verifiable substance.
+
+Section 07 is the defense-in-depth layer. **Read it before applying
+01–06 at scale.** If you skip it, you will produce hallucinated-
+justification output that's worse than honest defaults.
+
+The short version: **a labeled default is better than a hallucinated source.**
 
 ---
 
@@ -105,10 +132,17 @@ If you cannot name the source, you are using a default. Defaults are the smell.
 2. **Read the relevant layer** (visual / language / rhetoric) end-to-end.
    Don't skip the bad examples — they teach the reflex you're trying to avoid.
 3. **Read the matching checklist** as a final pass, not a starting point.
-4. **For each decision you make, write a one-line derivation** in a comment
+4. **Read `07-paradoxes/` before applying at scale.** Sections 01–06
+   will produce hallucinated-justification output without the meta-layer.
+   The short version: a labeled default beats a hallucinated source.
+5. **For each decision you make, write a one-line derivation** in a comment
    or a side note: `/* color: #2d4a3e ← brand moss, not Tailwind indigo-600 */`.
-5. **Run the heuristic self-check** (`05-workflow/02-self-check.md`) before
-   delivering. Any decision you can't answer for → redo it.
+   If you can't write a Tier 1 or Tier 2 source (see `07-paradoxes/02`),
+   admit it as a first guess.
+6. **Run the 10-question self-check** (`05-workflow/02-self-check.md`)
+   before delivering. Q9 (source tier verification) and Q10 (second-order
+   convergence) are non-negotiable — they catch hallucinations the
+   earlier questions miss.
 
 ---
 

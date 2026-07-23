@@ -110,11 +110,17 @@ Model:   [produces landing page]
 - The model caught 3 defaults in self-check (nav CTA, equal feature cards, signature words, forced elevation).
 - The delivered version is the **second internal draft**, not the first.
 
-## The eight-question self-check
+## The ten-question self-check
 
-Run these eight questions before delivering. For each, you must answer
+Run these ten questions before delivering. For each, you must answer
 **out loud** with a specific response. If you can't answer, or the answer
 is "this is my first guess," redo the corresponding decision.
+
+> Questions 1–8 are the original self-check. Questions 9–10 were added
+> after the paradox layer (`07-paradoxes/`) — they catch the failure
+> modes that emerge when the guide is applied naively. If you skip 9–10,
+> you will produce hallucinated-justification output that's worse than
+> honest defaults.
 
 ### Q1. Source for each major decision
 
@@ -193,9 +199,76 @@ overlays, and any other ornament.
   formula or falsifiable prediction? If not, change to "observation."
 - Did I redefine an existing word? If yes, coin a new one instead.
 
+### Q9. Source tier verification (from `07-paradoxes/02-source-verification.md`)
+
+**For each source I cited in Q1, which tier is it?**
+
+Classify every source claim:
+
+- **Tier 1 (verifiable external):** user-provided asset (logo file,
+  brand doc), URL, cited paper/standard, user's explicit statement,
+  real measurement.
+  *Test: can I point to where this came from?*
+- **Tier 2 (conventional, lookup-verifiable):** domain convention
+  (amber = warning), established standard (WCAG), widely-known fact
+  (Inter is Tailwind's default).
+  *Test: could a human verify this by a 30-second web search?*
+- **Tier 3 (asserted, hallucination risk):** affective claims
+  ("evokes warmth," "feels hand-made," "matches heritage," "conveys
+  authenticity").
+  *Test: is this a claim about how something "feels" or "evokes"?*
+
+**Rules:**
+- Tier 1 and Tier 2 count as sources. ✓
+- Tier 3 does NOT count. Remove the source claim. Replace with
+  "first guess (no source provided)" or "default, marked for review." ✗
+- **Did I invent any user-provided assets?** If I claimed "user-provided
+  logo.svg" without the user providing it, that's a hallucination. Remove.
+- **Am I using "evokes" / "feels" / "matches" / "conveys" anywhere?**
+  These are Tier 3 markers. Remove.
+
+**Count after verification:**
+- Tier 1 sources: ___
+- Tier 2 sources: ___
+- First-guess admissions: ___
+- Tier 3 hallucinations removed: ___ (must be 0 before delivery)
+
+If Tier 3 count > 0 before removal, you were hallucinating sources.
+Run again until 0.
+
+### Q10. Second-order convergence check (from `07-paradoxes/01-second-order-convergence.md`)
+
+**Could this output appear in 1000 other outputs made with this same guide?**
+
+For each source cited in Q1 (and verified in Q9), apply the specificity floor:
+
+> *Could this same source apply to 1000 other projects?*
+
+- "The brand is warm" → yes, applies to 1000 → not specific enough
+- "The brand is hand-made ceramics in Portugal" → no, applies to ~5 → specific enough
+- "Inter is clean" → yes → not specific enough
+- "The founder's previous publication used Tiempos" → no → specific enough
+
+**New anti-AI defaults check.** Am I reaching for these without a
+specific source?
+- Burnt sienna / forest green / ochre on warm cream
+- Fraunces + IBM Plex Sans (or Sora + Inter)
+- Asymmetric 7/5 grid with no hero
+- Fragments and "I went back to bed" endings
+- Custom IEC-style SVGs
+- "Field tech reading in sun" user persona
+
+If yes without a source unique to this input, I've **relocated to a new
+centroid, not escaped defaults**. Redo with sources that couldn't apply
+to 1000 other projects.
+
+**The test:** if 1000 agents followed this guide with 1000 different
+users, would my output be distinguishable? If no, the sources weren't
+specific enough.
+
 ## Domain-specific self-checks
 
-In addition to the eight universal questions, run the matching
+In addition to the ten universal questions, run the matching
 domain-specific checklist:
 
 - **Visual output**: run `06-checklist/visual-checklist.md`
@@ -257,7 +330,7 @@ hex codes, alternatives, specific sentences, actual counts.
 ## Instruction template
 
 ```
-Before delivering output, run the 8-question self-check out loud.
+Before delivering output, run the 10-question self-check out loud.
 Answer each with specifics, not yes/no.
 
 Q1. Source for each major decision?
@@ -302,6 +375,27 @@ Q8. Coinage check.
     For each, can you describe it in plain words? If yes, delete.
     For each "Law/Model/Framework/Index," state the formula.
     If you can't, change to "observation."
+
+Q9. Source tier verification (from 07-paradoxes/02).
+    For each source cited in Q1, classify:
+      - Tier 1 (user asset / URL / cited standard / user statement / measurement)?
+      - Tier 2 (conventional, 30-second lookup-verifiable)?
+      - Tier 3 (affective — "evokes," "feels," "matches," "conveys")?
+    Tier 3 does NOT count. Remove source claim; admit as first guess.
+    Did you invent any user-provided assets the user did not provide?
+    (If yes, remove — that's hallucination.)
+    Count: Tier 1 __, Tier 2 __, first-guess admissions __,
+    Tier 3 removed __ (must be 0 before delivery).
+
+Q10. Second-order convergence check (from 07-paradoxes/01).
+    For each source, could it apply to 1000 other projects?
+      - "brand is warm" → too generic
+      - "hand-made ceramics in Portugal" → specific enough
+    Are you reaching for new anti-AI defaults without a specific source?
+      (burnt sienna, Fraunces+Plex, 7/5 grid, "I went back to bed",
+       IEC SVGs, "field tech in sun" persona)
+    If yes without source unique to this input, you've relocated
+    to a new centroid, not escaped. Redo.
 
 After self-check, redo any decision that failed. Deliver only the
 revised version.
